@@ -1,0 +1,398 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+      "/auth/login": {
+        "post": {
+          "operationId": "AuthController_login",
+          "summary": "Login user register",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/LoginDto" }
+              }
+            }
+          },
+          "responses": {
+            "200": { "description": "Successfully authenticated user" },
+            "400": { "description": "Product not found" }
+          }
+        }
+      },
+      "/users": {
+        "post": {
+          "operationId": "UsersController_create",
+          "summary": "Create a new user",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateUserDto" }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "The user has been successfully created." },
+            "400": { "description": "Invalid input data." }
+          },
+          "tags": ["users"],
+          "security": [{ "bearer": [] }]
+        }
+      },
+      "/cart": {
+        "post": {
+          "operationId": "CartController_addProductToCart",
+          "summary": "Add product to cart",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateCartItemDto" }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "The sale has been successfully created." },
+            "400": { "description": "Invalid input data." }
+          },
+          "tags": ["Cart"],
+          "security": [{ "bearer": [] }]
+        }
+      },
+      "/cart/{userId}/product/{productId}": {
+        "delete": {
+          "operationId": "CartController_removeProductFromCart",
+          "summary": "Delete product to car",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "description": "ID del usuario",
+              "schema": { "type": "number" }
+            },
+            {
+              "name": "productId",
+              "required": true,
+              "in": "path",
+              "description": "ID del producto",
+              "schema": { "type": "number" }
+            }
+          ],
+          "responses": {
+            "204": { "description": "Products deleted successfully" },
+            "404": { "description": "User not found." }
+          },
+          "tags": ["Cart"],
+          "security": [{ "bearer": [] }]
+        }
+      },
+      "/cart/{id}": {
+        "get": {
+          "operationId": "CartController_getCartItems",
+          "summary": "Get a detail of cart",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "description": "Detail",
+              "schema": { "type": "number" }
+            }
+          ],
+          "responses": {
+            "200": { "description": "The found detail." },
+            "400": { "description": "Detail not found." }
+          },
+          "tags": ["Cart"],
+          "security": [{ "bearer": [] }]
+        }
+      },
+      "/products": {
+        "post": {
+          "operationId": "ProductsController_create",
+          "summary": "Create a new product",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateProductDto" }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Successfully created product" }
+          },
+          "tags": ["products"],
+          "security": [{ "bearer": [] }]
+        },
+        "get": {
+          "operationId": "ProductsController_findAll",
+          "summary": "Get all products",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "List of all products.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/CreateProductDto" }
+                  }
+                }
+              }
+            },
+            "400": { "description": "Products not found." }
+          },
+          "tags": ["products"],
+          "security": [{ "bearer": [] }]
+        }
+      },
+      "/products/search/{name}": {
+        "get": {
+          "operationId": "ProductsController_findAllProductsLikeName",
+          "summary": "Get all products like name",
+          "parameters": [
+            {
+              "name": "name",
+              "required": true,
+              "in": "path",
+              "description": "User name",
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of all products.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/CreateProductDto" }
+                  }
+                }
+              }
+            },
+            "400": { "description": "Products not found like name" }
+          },
+          "tags": ["products"],
+          "security": [{ "bearer": [] }]
+        }
+      },
+      "/products/{id}": {
+        "get": {
+          "operationId": "ProductsController_findOne",
+          "summary": "Get a single product by id",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "description": "Product ID",
+              "schema": { "type": "number" }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Product Detail",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/CreateProductDto" }
+                  }
+                }
+              }
+            },
+            "400": { "description": "Product not found" }
+          },
+          "tags": ["products"],
+          "security": [{ "bearer": [] }]
+        }
+      },
+      "/sales": {
+        "post": {
+          "operationId": "SalesController_create",
+          "summary": "Create a new sale",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateSaleDto" }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "The sale has been successfully created." },
+            "400": { "description": "Invalid input data." }
+          },
+          "tags": ["sales"],
+          "security": [{ "bearer": [] }]
+        }
+      },
+      "/sales/{month}/category/{category}": {
+        "get": {
+          "operationId": "SalesController_findSalesByMonthAndCategory",
+          "summary": "Find Sale By Category and month",
+          "parameters": [
+            {
+              "name": "month",
+              "required": true,
+              "in": "path",
+              "description": "month of year",
+              "schema": { "type": "number" }
+            },
+            {
+              "name": "category",
+              "required": true,
+              "in": "path",
+              "description": "Category of producto",
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "200": { "description": "Sales" },
+            "400": { "description": "Sales not found." }
+          },
+          "tags": ["sales"],
+          "security": [{ "bearer": [] }]
+        }
+      }
+    },
+    "info": {
+      "title": "Mi API de Marketplace",
+      "description": "Descripción de tu API",
+      "version": "1.0",
+      "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+      "securitySchemes": {
+        "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" }
+      },
+      "schemas": {
+        "LoginDto": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "The email of the user",
+              "example": "test@gmail.com"
+            },
+            "password": {
+              "type": "string",
+              "description": "The password of the user",
+              "example": "P@$$w0rd"
+            }
+          },
+          "required": ["email", "password"]
+        },
+        "CreateUserDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "John Doe"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email address",
+              "example": "john.doe@example.com"
+            },
+            "password": {
+              "type": "string",
+              "description": "User's password",
+              "example": "SecurePassword123"
+            }
+          },
+          "required": ["name", "email", "password"]
+        },
+        "CreateCartItemDto": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "number",
+              "description": "ID of the product in the cart",
+              "example": 1
+            },
+            "quantity": {
+              "type": "number",
+              "description": "Quantity of the product in the cart",
+              "example": 2
+            }
+          },
+          "required": ["productId", "quantity"]
+        },
+        "CreateProductDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the product",
+              "example": "Cotton T-Shirt"
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of the product",
+              "example": "Soft and comfortable organic cotton t-shirt."
+            },
+            "price": {
+              "type": "number",
+              "description": "Price of the product",
+              "example": 19.99
+            },
+            "category": {
+              "type": "string",
+              "description": "Category of the product",
+              "example": "T-Shirts"
+            },
+            "imageUrl": {
+              "type": "string",
+              "description": "URL of the product image",
+              "example": "https://example.com/image.jpg"
+            },
+            "stock": {
+              "type": "number",
+              "description": "Available stock of the product",
+              "example": 100
+            }
+          },
+          "required": ["name", "description", "price", "category", "stock"]
+        },
+        "CreateSaleDto": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "number",
+              "description": "ID of the product being sold",
+              "example": 1
+            },
+            "userId": {
+              "type": "number",
+              "description": "ID of the user making the purchase",
+              "example": 1
+            },
+            "quantity": {
+              "type": "number",
+              "description": "Quantity of the product being sold",
+              "example": 2
+            },
+            "value": {
+              "type": "number",
+              "description": "Total value of the sale",
+              "example": 19.99
+            }
+          },
+          "required": ["productId", "userId", "quantity", "value"]
+        }
+      }
+    }
+  }
+  
